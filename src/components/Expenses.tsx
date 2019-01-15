@@ -1,6 +1,8 @@
 import React, { Component, FormEvent } from 'react';
 import ExpensesForm from './ExpensesForm';
 import ExpensesTable from './ExpensesTable';
+import CurrencyRate from './CurrencyRate';
+import ExpensesTotal from './ExpensesTotal';
 
 interface Props {}
 
@@ -80,30 +82,17 @@ class Expenses extends Component<Props, {}> {
     }));
   };
 
-  calculateTotal = () => {
-    return this.state.expenses.reduce((acc, { amount }) => acc + +amount, 0);
-  };
-
   render() {
     const { conversionRate } = this.state;
-    const totalPLN = this.calculateTotal();
-    const totalEUR = Number(totalPLN * conversionRate).toFixed(2);
 
     return (
       <div>
         <h1>List of Expenses</h1>
 
-        <div>
-          <label htmlFor="conversionRate">PLN to EUR conversion rate</label>
-          <input
-            id="conversionRate"
-            type="number"
-            name="conversionRate"
-            value={conversionRate}
-            style={{ width: '50px' }}
-            onChange={this.handleInputChange}
-          />
-        </div>
+        <CurrencyRate
+          conversionRate={conversionRate}
+          change={this.handleInputChange}
+        />
 
         <ExpensesForm
           amount={this.state.amount}
@@ -119,7 +108,10 @@ class Expenses extends Component<Props, {}> {
           conversionRate={this.state.conversionRate}
         />
 
-        <div>Sum: {`${totalPLN} (${totalEUR} EUR)`};</div>
+        <ExpensesTotal
+          expenses={this.state.expenses}
+          conversionRate={conversionRate}
+        />
       </div>
     );
   }
