@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const ExpenseTotalWrapper = styled.div`
+  font-size: 2rem;
   margin-top: 1rem;
 `;
 

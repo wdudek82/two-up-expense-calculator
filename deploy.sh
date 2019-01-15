@@ -2,11 +2,11 @@
 
 npm run build
 tar czf build.tgz build/*
-scp build.tgz expenses@helios-2:~
+scp build.tgz expense@helios-2:~
 rm -r build
 rm build.tgz
 
-ssh -t expenses@helios-2 << 'ENDSSH'
+ssh -t expense@helios-2 << 'ENDSSH'
   rm -rf app
   mkdir app
   tar xzf build.tgz -C app
