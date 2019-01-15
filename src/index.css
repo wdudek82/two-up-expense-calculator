@@ -6,8 +6,43 @@
   font-family: 'Roboto', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Satisfy', cursive;
+}
+
+th {
+  text-align: left;
+}
+
+tr {
+  height: 3rem;
+}
+
+.form-container {
+  margin: 2rem 0;
+}
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-item input {
+  background: #eee;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  height: 2.5rem;
+  padding: 0 1rem;
+}
+
+.form-item input:focus {
+  background: #fff;
 }
 
 html {

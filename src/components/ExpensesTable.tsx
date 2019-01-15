@@ -1,4 +1,24 @@
 import React, { Component } from 'react';
+import styled from '@emotion/styled';
+
+const Table = styled.table`
+  width: 100%;
+`;
+
+const Delete = styled.button`
+  background: none;
+  border: 1px solid #ccc;
+  outline: none;
+  height: 3rem;
+
+  &:hover {
+    background: #eee;
+  }
+
+  &:active {
+    background: #ddd;
+  }
+`;
 
 interface Expense {
   titleOfTransaction: string;
@@ -17,7 +37,7 @@ class ExpensesTable extends Component<Props, {}> {
   };
 
   convertAmountToEuro = (amount: number) => {
-    return (amount * this.props.conversionRate).toFixed(2);
+    return (amount / this.props.conversionRate).toFixed(2);
   };
 
   renderAllExpenses = (): React.ReactNodeArray => {
@@ -27,9 +47,9 @@ class ExpensesTable extends Component<Props, {}> {
         <td>{expense.amount}</td>
         <td>{this.convertAmountToEuro(expense.amount)}</td>
         <td>
-          <button type="button" onClick={() => this.props.remove(i)}>
+          <Delete type="button" onClick={() => this.props.remove(i)}>
             Delete
-          </button>
+          </Delete>
         </td>
       </tr>
     ));
@@ -39,7 +59,7 @@ class ExpensesTable extends Component<Props, {}> {
     const renderedExpenses = this.renderAllExpenses();
 
     return (
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>Title</th>
@@ -49,7 +69,7 @@ class ExpensesTable extends Component<Props, {}> {
           </tr>
         </thead>
         <tbody>{renderedExpenses}</tbody>
-      </table>
+      </Table>
     );
   }
 }

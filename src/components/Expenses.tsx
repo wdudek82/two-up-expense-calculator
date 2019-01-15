@@ -8,11 +8,17 @@ import ExpensesTotal from './ExpensesTotal';
 const ExpensesWrapper = styled.div`
   box-shadow: 2px 2px 9px 0 #ccc;
   padding: 3rem;
+  min-width: 500px;
 `;
 
 const Header = styled.h1`
   text-align: center;
   margin-top: 0;
+`;
+
+const Container = styled.div`
+  border: 1px solid #ddd;
+  padding: 1rem;
 `;
 
 interface Props {}
@@ -75,7 +81,7 @@ class Expenses extends Component<Props, {}> {
 
     const { titleOfTransaction, amount } = this.state;
 
-    if (titleOfTransaction.length > 5 && amount) {
+    if (titleOfTransaction.length >= 5 && amount) {
       this.setState((prevState: Readonly<State>) => ({
         titleOfTransaction: '',
         titleInputChanged: false,
@@ -100,29 +106,31 @@ class Expenses extends Component<Props, {}> {
       <ExpensesWrapper>
         <Header>List of Expenses</Header>
 
-        <CurrencyRate
-          conversionRate={conversionRate}
-          change={this.handleInputChange}
-        />
+        <Container>
+          <CurrencyRate
+            conversionRate={conversionRate}
+            change={this.handleInputChange}
+          />
 
-        <ExpensesForm
-          amount={this.state.amount}
-          titleOfTransaction={this.state.titleOfTransaction}
-          titleChanged={this.state.titleInputChanged}
-          change={this.handleInputChange}
-          add={this.handleSubmit}
-        />
+          <ExpensesForm
+            amount={this.state.amount}
+            titleOfTransaction={this.state.titleOfTransaction}
+            titleChanged={this.state.titleInputChanged}
+            change={this.handleInputChange}
+            add={this.handleSubmit}
+          />
 
-        <ExpensesTable
-          expenses={this.state.expenses}
-          remove={(index: number) => this.removeExpense(index)}
-          conversionRate={this.state.conversionRate}
-        />
+          <ExpensesTable
+            expenses={this.state.expenses}
+            remove={(index: number) => this.removeExpense(index)}
+            conversionRate={this.state.conversionRate}
+          />
 
-        <ExpensesTotal
-          expenses={this.state.expenses}
-          conversionRate={conversionRate}
-        />
+          <ExpensesTotal
+            expenses={this.state.expenses}
+            conversionRate={conversionRate}
+          />
+        </Container>
       </ExpensesWrapper>
     );
   }

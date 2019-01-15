@@ -1,4 +1,11 @@
 import React from 'react';
+import styled from '@emotion/styled';
+
+const CurrencyRateWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
 
 interface Props {
   conversionRate: number;
@@ -9,8 +16,10 @@ const CurrencyRate = (props: Props) => {
   const { conversionRate, change } = props;
 
   return (
-    <div>
-      <label htmlFor="conversionRate">PLN to EUR conversion rate</label>
+    <CurrencyRateWrapper>
+      <label htmlFor="conversionRate" className="expense-label">
+        PLN to EUR conversion rate
+      </label>
       <input
         id="conversionRate"
         type="number"
@@ -19,7 +28,7 @@ const CurrencyRate = (props: Props) => {
         style={{ width: '50px' }}
         onChange={change}
       />
-    </div>
+    </CurrencyRateWrapper>
   );
 };
 
