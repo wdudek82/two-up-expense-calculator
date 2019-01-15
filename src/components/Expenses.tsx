@@ -64,7 +64,7 @@ class Expenses extends Component<Props, {}> {
 
     const { titleOfTransaction, amount } = this.state;
 
-    if (titleOfTransaction && amount) {
+    if (titleOfTransaction.length > 5 && amount) {
       this.setState((prevState: Readonly<State>) => ({
         titleOfTransaction: '',
         titleInputChanged: false,
