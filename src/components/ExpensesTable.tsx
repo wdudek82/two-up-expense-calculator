@@ -10,6 +10,7 @@ const Delete = styled.button`
   border: 1px solid #ccc;
   outline: none;
   height: 3rem;
+  border-radius: 5px;
 
   &:hover {
     background: #eee;
