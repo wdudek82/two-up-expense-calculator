@@ -1,8 +1,19 @@
 import React, { Component, FormEvent } from 'react';
+import styled from '@emotion/styled';
 import ExpensesForm from './ExpensesForm';
 import ExpensesTable from './ExpensesTable';
 import CurrencyRate from './CurrencyRate';
 import ExpensesTotal from './ExpensesTotal';
+
+const ExpensesWrapper = styled.div`
+  box-shadow: 2px 2px 9px 0 #ccc;
+  padding: 3rem;
+`;
+
+const Header = styled.h1`
+  text-align: center;
+  margin-top: 0;
+`;
 
 interface Props {}
 
@@ -47,7 +58,7 @@ class Expenses extends Component<Props, {}> {
     }
   };
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const target = e.currentTarget;
     const { name, value } = target;
 
@@ -59,7 +70,7 @@ class Expenses extends Component<Props, {}> {
     }
   };
 
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const { titleOfTransaction, amount } = this.state;
@@ -86,8 +97,8 @@ class Expenses extends Component<Props, {}> {
     const { conversionRate } = this.state;
 
     return (
-      <div>
-        <h1>List of Expenses</h1>
+      <ExpensesWrapper>
+        <Header>List of Expenses</Header>
 
         <CurrencyRate
           conversionRate={conversionRate}
@@ -112,7 +123,7 @@ class Expenses extends Component<Props, {}> {
           expenses={this.state.expenses}
           conversionRate={conversionRate}
         />
-      </div>
+      </ExpensesWrapper>
     );
   }
 }
