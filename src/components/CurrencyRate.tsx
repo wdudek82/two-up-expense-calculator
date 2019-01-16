@@ -5,6 +5,10 @@ const CurrencyRateWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
+  
+  input {
+    width: 65px;
+  }
 `;
 
 interface Props {
@@ -25,7 +29,6 @@ const CurrencyRate = (props: Props) => {
         type="number"
         name="conversionRate"
         value={conversionRate}
-        style={{ width: '50px' }}
         onChange={change}
       />
     </CurrencyRateWrapper>

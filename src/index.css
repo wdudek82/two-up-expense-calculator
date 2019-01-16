@@ -17,10 +17,20 @@ h6 {
 
 th {
   text-align: left;
+  background: #333;
+  color: #eee;
 }
 
 tr {
   height: 3rem;
+}
+
+tbody > tr:hover {
+  background: #eee;
+}
+
+th, td {
+  padding: 0 1rem;
 }
 
 .form-container {
@@ -32,17 +42,16 @@ tr {
   justify-content: space-between;
 }
 
-.form-item input {
+input {
   background: #eee;
   outline: none;
   border: none;
   border-bottom: 2px solid #ccc;
   height: 2.5rem;
-  /*width: 10rem;*/
   padding: 0 1rem;
 }
 
-.form-item input:focus {
+input:focus:not([type="submit"]) {
   background: #fff;
 }
 

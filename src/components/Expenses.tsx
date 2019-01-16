@@ -5,6 +5,7 @@ import ExpensesForm from './ExpensesForm';
 import ExpensesTable from './ExpensesTable';
 import CurrencyRate from './CurrencyRate';
 import ExpensesTotal from './ExpensesTotal';
+import SearchExpense from './SearchExpense';
 
 const ExpensesWrapper = styled.div`
   box-shadow: 2px 2px 9px 0 #ccc;
@@ -155,15 +156,10 @@ class Expenses extends Component<Props, {}> {
             add={this.handleSubmit}
           />
 
-          <div>
-            <label htmlFor="searchedItem">Search</label>
-            <input
-              type="text"
-              name="searchedItem"
-              value={this.state.searchedItem}
-              onChange={this.handleInputChange}
-            />
-          </div>
+          <SearchExpense
+            searchedItem={this.state.searchedItem}
+            change={this.handleInputChange}
+          />
 
           <ExpensesTable
             expenses={this.state.expenses}

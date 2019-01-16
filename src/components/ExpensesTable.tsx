@@ -13,11 +13,16 @@ const Delete = styled.button`
   border-radius: 5px;
 
   &:hover {
-    background: #eee;
+    background: #ffb8c9;
   }
 
   &:active {
-    background: #ddd;
+    background: #ff706f;
+  }
+  
+  &:hover,
+  &:active {
+    border: 1px solid #ff5765;
   }
 `;
 

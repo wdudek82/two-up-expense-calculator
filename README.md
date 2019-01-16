@@ -9,7 +9,8 @@
 * [x] User should be allowed to delete any item from the list.
 * [x] The sum should be calculated automatically.
 * [x] Optionally add possibility to change conversion rate.
-* [ ] Add searching by product name.
+* [x] Add searching by product name.
+* [ ] Add spinner.
 * [ ] Add sorting.
 * [ ] Add pretty and functional table.
 * [x] Add styling with Styled Components or Emotion.
