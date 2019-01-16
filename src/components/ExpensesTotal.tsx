@@ -21,8 +21,9 @@ interface Props {
 }
 
 const ExpensesTotal = (props: Props) => {
-  const totalPLN = props.expenses.reduce((acc, { amount }) => acc + +amount, 0);
-  const totalEUR = Number(totalPLN / props.conversionRate).toFixed(2);
+  const total = props.expenses.reduce((acc, { amount }) => acc + +amount, 0);
+  const totalPLN = Number(total).toFixed(2);
+  const totalEUR = Number(total / props.conversionRate).toFixed(2);
 
   return (
     <ExpenseTotalWrapper>

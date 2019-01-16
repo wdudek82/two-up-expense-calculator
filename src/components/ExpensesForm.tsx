@@ -62,7 +62,7 @@ const ExpensesForm = (props: Props) => {
       </ValidationError>
       <div className="form-item">
         <label>Amount (in PLN)</label>
-        <input type="number" name="amount" value={amount} onChange={change} />
+        <input type="number" name="amount" value={amount} step="0.01" onChange={change} />
       </div>
       <ValidationError />
       <AddContainer>

@@ -22,6 +22,7 @@ const Delete = styled.button`
 `;
 
 interface Expense {
+  id: string;
   titleOfTransaction: string;
   amount: number;
 }
@@ -29,7 +30,8 @@ interface Expense {
 interface Props {
   expenses: Array<Expense>;
   conversionRate: number;
-  remove: (index: number) => void;
+  remove: (id: string) => void;
+  searchedItem: string;
 }
 
 class ExpensesTable extends Component<Props, {}> {
@@ -42,18 +44,22 @@ class ExpensesTable extends Component<Props, {}> {
   };
 
   renderAllExpenses = (): React.ReactNodeArray => {
-    return this.props.expenses.map((expense, i) => (
-      <tr key={this.generateKey(i)}>
-        <td>{expense.titleOfTransaction}</td>
-        <td>{expense.amount}</td>
-        <td>{this.convertAmountToEuro(expense.amount)}</td>
-        <td>
-          <Delete type="button" onClick={() => this.props.remove(i)}>
-            Delete
-          </Delete>
-        </td>
-      </tr>
-    ));
+    return this.props.expenses
+      .filter(({ titleOfTransaction }) => {
+        return titleOfTransaction.includes(this.props.searchedItem);
+      })
+      .map((expense, i) => (
+        <tr key={this.generateKey(i)}>
+          <td>{expense.titleOfTransaction}</td>
+          <td>{expense.amount}</td>
+          <td>{this.convertAmountToEuro(expense.amount)}</td>
+          <td>
+            <Delete type="button" onClick={() => this.props.remove(expense.id)}>
+              Delete
+            </Delete>
+          </td>
+        </tr>
+      ));
   };
 
   render() {

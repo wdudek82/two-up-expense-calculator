@@ -1,5 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import styled from '@emotion/styled';
+import expensesRef from '../firestore-config';
 import ExpensesForm from './ExpensesForm';
 import ExpensesTable from './ExpensesTable';
 import CurrencyRate from './CurrencyRate';
@@ -21,12 +22,18 @@ const Container = styled.div`
   padding: 1rem;
 `;
 
+interface Expense {
+  id: string;
+  titleOfTransaction: string;
+  amount: number;
+}
+
 interface Props {}
 
 interface State {
   titleOfTransaction: string;
   amount: string;
-  expenses: Array<Object>;
+  expenses: Array<Expense>;
   conversionRate: number;
 }
 
@@ -35,9 +42,33 @@ class Expenses extends Component<Props, {}> {
     titleOfTransaction: '',
     titleInputChanged: false,
     amount: '',
-    expenses: [{ titleOfTransaction: 'Foo', amount: 20 }],
+    expenses: [{ id: '', titleOfTransaction: '', amount: 0 }],
     total: 0,
     conversionRate: 4.29,
+    searchedItem: '',
+  };
+
+  componentDidMount() {
+    this.getExpenses();
+  }
+
+  getExpenses = () => {
+    const expenses: Array<Object> = [];
+    expensesRef
+      .get()
+      .then((res) => {
+        res.forEach((doc) => {
+          const { titleOfTransaction, amount } = doc.data();
+          expenses.push({
+            id: doc.id,
+            titleOfTransaction,
+            amount,
+          });
+        });
+      })
+      .then(() => {
+        this.setState(() => ({ expenses }));
+      });
   };
 
   validateTitle = (value: string): boolean => {
@@ -65,8 +96,7 @@ class Expenses extends Component<Props, {}> {
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const target = e.currentTarget;
-    const { name, value } = target;
+    const { name, value } = e.currentTarget;
 
     if (this.validateInput(name, value)) {
       this.setState((prevState: Readonly<State>) => ({
@@ -82,21 +112,26 @@ class Expenses extends Component<Props, {}> {
     const { titleOfTransaction, amount } = this.state;
 
     if (titleOfTransaction.length >= 5 && amount) {
+      expensesRef
+        .add({
+          titleOfTransaction: this.state.titleOfTransaction,
+          amount: this.state.amount,
+        })
+        .then(() => this.getExpenses());
+
       this.setState((prevState: Readonly<State>) => ({
         titleOfTransaction: '',
         titleInputChanged: false,
         amount: '',
-        expenses: [...prevState.expenses, { titleOfTransaction, amount }],
       }));
     }
   };
 
-  removeExpense = (index: number): void => {
-    const updExpenses = this.state.expenses.filter((expense, i) => index !== i);
-    this.setState((prevState: Readonly<State>) => ({
-      ...prevState,
-      expenses: updExpenses,
-    }));
+  removeExpense = (id: string): void => {
+    expensesRef
+      .doc(id)
+      .delete()
+      .then(() => this.getExpenses());
   };
 
   render() {
@@ -120,10 +155,21 @@ class Expenses extends Component<Props, {}> {
             add={this.handleSubmit}
           />
 
+          <div>
+            <label htmlFor="searchedItem">Search</label>
+            <input
+              type="text"
+              name="searchedItem"
+              value={this.state.searchedItem}
+              onChange={this.handleInputChange}
+            />
+          </div>
+
           <ExpensesTable
             expenses={this.state.expenses}
-            remove={(index: number) => this.removeExpense(index)}
+            remove={(id: string) => this.removeExpense(id)}
             conversionRate={this.state.conversionRate}
+            searchedItem={this.state.searchedItem}
           />
 
           <ExpensesTotal
