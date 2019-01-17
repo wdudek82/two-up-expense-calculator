@@ -22,7 +22,7 @@ const CurrencyRate = (props: Props) => {
   return (
     <CurrencyRateWrapper>
       <label htmlFor="conversionRate" className="expense-label">
-        PLN to EUR conversion rate
+        EUR to PLN conversion rate
       </label>
       <input
         id="conversionRate"
